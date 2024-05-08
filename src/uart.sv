@@ -23,45 +23,54 @@ module uart #(DATA_WIDTH = 8)(
     input  logic [31:0] pwdata_i,
     output logic [31:0] pedata_o,
 
+    input logic [16:0] boudrate,
+
     //uart
     input rx_i,
     output tx_o
 );
-
-    logic uart_clk;
-
+//draw.io | yEd Graph Editor
+//uvm tlm
     // подключение модулей
-    
     uart_rx uart_rx2axis (
-        .uart_clk           (clk_i),
-        .rst_n              (rst_n_i),
-        .rx_i               (rx_i),
-        .mst_axis_tdata_o   (mst_axis_tdata_o),
-        .mst_axis_tvalid_o  (mst_axis_tvalid_o),
-        .mst_axis_tlast_o   (mst_axis_tlast_o),
-        .mst_axis_tready_i  (mst_axis_tready_i)
+        .clk_i (clk),
+        .rst_n_i (rst_n),
+        .rx_i (rx_i),
+        .boudrate_i (boudrate),
+        .mst_axis_tdata_o (mst_axis_tdata_o),
+        .mst_axis_tvalid_o (mst_axis_tvalid_o),
+        .mst_axis_tlast_o (mst_axis_tlast_o),
+        .mst_axis_tready_i (mst_axis_tready_i),
+        .parity_check_error (parity_check_error),
+        .stop_bit_check_error (stop_bit_check_error)
     );
 
     uart_tx axis2uart_tx (
-        .uart_clk           (clk_i),
-        .rst_n              (rst_n_i),
-        .slv_axis_tready_i  (slv_axis_tready_i),
-        .slv_axis_tdata_o   (slv_axis_tdata_o),
-        .slv_axis_tvalid_o  (slv_axis_tvalid_o),
-        .slv_axis_tlast_o   (slv_axis_tlast_o),
-        .tx_o               (tx_o)
+        .clk_i (clk),
+        .rst_n_i (rst_n),
+        .boudrate_i (boudrate),
+        .slv_axis_tdata_i (slv_axis_tdata_i),
+        .slv_axis_tvalid_i (slv_axis_tvalid_i),
+        .slv_axis_tready_o (slv_axis_tready_o),
+        .tx_o (tx_o)
     );
 
-    uart_regs apb_uart_regs (
-        .clk        (clk_i),
-        .rst_n      (rst_n_i),
-        .psel_i     (psel_i),
-        .penable_i  (penable_i),
-        .pwrite_i   (pwrite_i),
-        .paddr_i    (paddr_i),
-        .pwdata_i   (pwdata_i),
-        .prdata_o   (prdata_o),
-        .uart_clk   (uart_clk_o)
-    );
+    // uart_regs apb_uart_regs (
+    //     .clk        (clk_i),
+    //     .rst_n      (rst_n_i),
+    //     .psel_i     (psel_i),
+    //     .penable_i  (penable_i),
+    //     .pwrite_i   (pwrite_i),
+    //     .paddr_i    (paddr_i),
+    //     .pwdata_i   (pwdata_i),
+    //     .prdata_o   (prdata_o)
+    // );
     
 endmodule
+
+// rx
+// tx
+// схема
+// axis_agent найти почитать посмотреть 
+// apb_agent найти почитать посмотреть 
+// uart_agent найти почитать посмотреть 

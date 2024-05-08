@@ -1,5 +1,5 @@
 
-interface axis_if #(
+interface automatic axis_if #(
     parameter DATA_WIDTH = 8
   )(input logic clk, input logic rst_n);
 
@@ -8,7 +8,7 @@ interface axis_if #(
     logic tready = 0;
     logic tlast =0;
 
-    task send_frame(ref bit [DATA_WIDTH-1:0] send_data []);
+    task automatic send_frame(ref bit [DATA_WIDTH-1:0] send_data []);
         logic tmp_valid;
         int i;
         tlast <= 0;
