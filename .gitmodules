@@ -1,0 +1,6 @@
+[submodule "sim/src/AXIS_UVM_Agent"]
+	path = sim/src/AXIS_UVM_Agent
+	url = https://github.com/VSHEV92/AXIS_UVM_Agent
+[submodule "sim/src/uvma_apb"]
+	path = sim/src/uvma_apb
+	url = https://github.com/JJY-99/uvma_apb
