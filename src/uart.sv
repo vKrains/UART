@@ -16,21 +16,22 @@ module uart #(DATA_WIDTH = 8)(
     input  logic mst_axis_tready_i,
 
     // apb interface
-    input  logic psel_i,
-    input  logic penable_i,
-    input  logic pwrite_i,
-    input  logic [31:0] paddr_i,
-    input  logic [31:0] pwdata_i,
-    output logic [31:0] pedata_o,
-
-    input logic [16:0] boudrate,
+    input logic psel_i,
+    input logic penable_i,
+    input logic pwrite_i,
+    input logic [31:0] paddr_i,
+    input logic [31:0] pwdata_i,
+    output logic pready_o,
+    output logic pslverr_o,
+    output logic [31:0] prdata_o,
 
     //uart
     input rx_i,
     output tx_o
 );
-//draw.io | yEd Graph Editor
-//uvm tlm
+
+    logic [16:0] boudrate;
+
     // подключение модулей
     uart_rx uart_rx2axis (
         .clk_i (clk),
@@ -55,22 +56,24 @@ module uart #(DATA_WIDTH = 8)(
         .tx_o (tx_o)
     );
 
-    // uart_regs apb_uart_regs (
-    //     .clk        (clk_i),
-    //     .rst_n      (rst_n_i),
-    //     .psel_i     (psel_i),
-    //     .penable_i  (penable_i),
-    //     .pwrite_i   (pwrite_i),
-    //     .paddr_i    (paddr_i),
-    //     .pwdata_i   (pwdata_i),
-    //     .prdata_o   (prdata_o)
-    // );
+    uart_regs apb_uart_regs (
+        .clk_i      (clk),
+        .rst_n_i    (rst_n),
+        .psel_i     (psel_i),
+        .penable_i  (penable_i),
+        .pwdata_i   (pwdata_i),
+        .prdata_o   (prdata_o),
+        .pready_o   (pready_o),
+        .pslverr_o  (pslverr_o),
+        .pwrite_i   (pwrite_i),
+        .paddr_i    (paddr_i),
+        .boudrate_o (boudrate)
+    );
     
 endmodule
 
-// rx
-// tx
-// схема
-// axis_agent найти почитать посмотреть 
-// apb_agent найти почитать посмотреть 
-// uart_agent найти почитать посмотреть 
+// git submodule
+// сделать test 
+// в test -> env
+// in env собрать систему
+// uart_agent 

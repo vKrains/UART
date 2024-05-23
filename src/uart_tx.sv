@@ -66,7 +66,7 @@ module uart_tx #(DATA_WIDTH = 8)(
             end
             DATA_BIT:
             begin
-                tx_o = reg_data[0];
+                tx_o = reg_data[7];
                 boudgenerate = 1;
                 if(bit_done) begin
                     if(bit_count == 8) begin
@@ -143,11 +143,11 @@ module uart_tx #(DATA_WIDTH = 8)(
             reg_data <= slv_axis_tdata_i;
         end else if(state == DATA_BIT) begin
             if(bit_done) begin
-                reg_data <= {1'b0, reg_data[7:1]};
+                reg_data <= {reg_data[6:0], 1'b0};
             end
         end
     end
     
-    assign slv_axis_tready_o = 1;
+    assign slv_axis_tready_o = (state == IDLE);
 
 endmodule
