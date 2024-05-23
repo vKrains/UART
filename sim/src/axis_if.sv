@@ -1,4 +1,3 @@
-
 interface automatic axis_if #(
     parameter DATA_WIDTH = 8
   )(input logic clk, input logic rst_n);
@@ -6,7 +5,7 @@ interface automatic axis_if #(
     logic [DATA_WIDTH-1:0] tdata;
     logic tvalid = 0;
     logic tready = 0;
-    logic tlast =0;
+    logic tlast = 0;
 
     task automatic send_frame(ref bit [DATA_WIDTH-1:0] send_data []);
         logic tmp_valid;
@@ -31,7 +30,7 @@ interface automatic axis_if #(
         @(posedge clk);
     endtask
 
-    task get_frame (ref bit [DATA_WIDTH-1:0] get_data []);
+    task automatic get_frame (ref bit [DATA_WIDTH-1:0] get_data []);
         int j;
         j = 0;
         get_data = new[j];

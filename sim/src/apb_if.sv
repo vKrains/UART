@@ -5,7 +5,7 @@ interface apb_if #(
   input logic rst_n
 );
 
-  logic [5:0] paddr;
+  logic [31:0] paddr;
   logic psel = 0;
   logic penable = 0;
   logic pwrite = 0;
@@ -14,7 +14,7 @@ interface apb_if #(
   logic [WIDTH-1:0] prdata;
   logic [WIDTH-1:0] pwdata;
 
-  task write(input logic [4:0] addr, input logic [WIDTH-1:0] data);
+  task write(input logic [31:0] addr, input logic [WIDTH-1:0] data);
     @(posedge clk);
     paddr <= addr;
     psel <= 1;
@@ -31,7 +31,7 @@ interface apb_if #(
     penable <= 0;
   endtask
 
-  task read(input logic [4:0] addr, ref logic [WIDTH-1:0] data);
+  task read(input logic [31:0] addr, ref logic [WIDTH-1:0] data);
     paddr <= addr;
     psel <= 1;
     pwrite <= 0;
