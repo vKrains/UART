@@ -19,6 +19,7 @@ add_files -norecurse ../../src/uart.sv
 
 # add simulation source
 create_fileset $SIM_FILESET
+add_files -norecurse ../src/AXIS_UVM_Agent/src/axis_intf.sv
 add_files -norecurse ../src/uvm_uart_test_pkg/uvm_uart_test_pkg.sv
 add_files -norecurse ../src/tb.sv
 
