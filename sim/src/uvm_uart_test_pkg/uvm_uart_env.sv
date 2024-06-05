@@ -1,35 +1,29 @@
-// `include "../src/AXIS_UVM_Agent/example_env/test_pkg.sv"
-//`include "../src/AXIS_UVM_Agent/example_env/"
-//`include "../src/AXIS_UVM_Agent/src/axis_include.svh"
-
 class uvm_uart_env extends uvm_env;
     `uvm_component_utils(uvm_uart_env)
 
-   // virtual axis_if axis_if_h;
-    // virtual axis_if axis_if_h;
-    // virtual axis_if v_slv_axis_out;
-    // virtual apb_if  v_apb_if;
-    //virtual uart_if v_uart_if;
-
-    // axis_agent mst_axis_agent;
-    // axis_agent
-    // apb_agent
-    //uart_agent
-
-    // test_scoreboard test_scoreboard_h;
-
-    function new(string name, uvm_component parent);
+    function new (string name = "", uvm_component parent = null);
         super.new(name, parent);
     endfunction
 
+    virtual uvma_apb_if apb_if_h;
+
+    // virtual axis_if #(4) mst_axis_if_h;
+
+    uvma_apb_agent apb_agent_h;
+
+    // axis_agent #(4) mst_axis_agent;
+
+    
+
     virtual function void build_phase(uvm_phase phase);
         super.build_phase(phase);
+        if (!uvm_config_db #(virtual axis_if #(TDATA_BYTES_IN))::get(this, "", "mst_axis_if_h", mst_axis_if_h))
+        `uvm_fatal("GET_DB", "Can not get mst_axis_if_h")
 
-        // mst_axis_agent = axis_agent::type_id::create("mst_axis_agent", this);
 
-        // mst_axis_agent.agent_type = MASTER;
+        apb_agent_h = uvma_apb_agent #(4)::type_id::create("apb_agent_h", this);        
 
-        // mst_axis_agent.axis_if_h = this.axis_if_h;
+        apb_agent_h.axis_if_h = this.apb_agent_h;
         `uvm_info("UVM_INFO", "Hello from env", UVM_NONE);
     endfunction
 
