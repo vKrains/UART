@@ -7,11 +7,14 @@ module tb;
     //`include "uvm_macros.svh"
 
     bit aclk = 0;
+    bit rst_n = 1;
 
-    axis_if #(8) u_axis_if (aclk);
+    axis_if  u_axis_if (aclk);
+    uvma_apb_if u_apb_if (aclk, rst_n);
 
     initial begin
-        uvm_config_db #(virtual axis_if #(8))::set(null, "uvm_test_top.*", "u_axis_if", u_axis_if);
+        uvm_config_db #(virtual axis_if)::set(null, "uvm_test_top.*", "mst_axis_if_h", u_axis_if);
+        uvm_config_db #(virtual uvma_apb_if)::set(null, "uvm_test_top.*", "vif", u_apb_if);
         run_test("uvm_uart_base_test");
     end
 endmodule
