@@ -21,6 +21,8 @@ class uvm_uart_scoreboard extends uvm_scoreboard;
         analysis_port_mst_axis = new("analysis_port_mst_axis", this);
         analysis_port_slv_axis = new("analysis_port_slv_axis", this);
         analysis_port_mst_apb =  new("analysis_port_mst_apb", this);
+
+        `uvm_info("UVM_INFO", "Hello from scoreboard", UVM_NONE);
     endfunction
 
     function void write_mst_axis (axis_data axis_data_h);
