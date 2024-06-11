@@ -37,7 +37,7 @@ module uart #(DATA_WIDTH = 8)(
         .clk_i (clk),
         .rst_n_i (rst_n),
         .rx_i (rx_i),
-        .boudrate_i (boudrate),
+        .cfg_div (boudrate),
         .mst_axis_tdata_o (mst_axis_tdata_o),
         .mst_axis_tvalid_o (mst_axis_tvalid_o),
         .mst_axis_tlast_o (mst_axis_tlast_o),

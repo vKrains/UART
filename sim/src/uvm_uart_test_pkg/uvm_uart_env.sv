@@ -5,13 +5,13 @@ class uvm_uart_env extends uvm_env;
         super.new(name, parent);
     endfunction
 
-    // virtual uvma_apb_if apb_if_h;
 
     virtual axis_if mst_axis_if_h;
-
-    // uvma_apb_agent apb_agent_h;
+    virtual axis_if slv_axis_if_h;
 
     axis_agent mst_axis_agent;
+    axis_agent slv_axis_agent;
+    apb_agent  mst_apb_agent;
 
     
 
@@ -19,9 +19,19 @@ class uvm_uart_env extends uvm_env;
         super.build_phase(phase);
         if (!uvm_config_db #(virtual axis_if )::get(this, "", "mst_axis_if_h", mst_axis_if_h))
            `uvm_fatal("GET_DB", "Can not get mst_axis_if_h")
+           
+        if (!uvm_config_db #(virtual axis_if )::get(this, "", "slv_axis_if_h", slv_axis_if_h))
+           `uvm_fatal("GET_DB", "Can not get slv_axis_if_h")
 
         mst_axis_agent = axis_agent::type_id::create("mst_axis_agent", this);
-        // apb_agent_h = uvma_apb_agent #(4)::type_id::create("apb_agent_h", this);        
+        slv_axis_agent = axis_agent::type_id::create("slv_axis_agent", this);
+        mst_apb_agent = apb_agent::type_id::create("mst_apb_agent", this);   
+
+        mst_axis_agent.axis_if_h = mst_axis_if_h;
+        mst_axis_agent.agent_type = MASTER;
+        slv_axis_agent.axis_if_h = slv_axis_if_h;
+        slv_axis_agent.agent_type = SLAVE;
+             
 
         `uvm_info("UVM_INFO", "Hello from env", UVM_NONE);
     endfunction

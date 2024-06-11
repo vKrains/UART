@@ -17,7 +17,7 @@ class apb_monitor extends uvm_monitor;
    function void build_phase(uvm_phase phase);
      super.build_phase(phase);
      if (!uvm_config_db#(virtual dut_if)::get(this, "", "vif", vif)) begin
-       `uvm_error("build_phase", "No virtual interface specified for this monitor instance")
+       `uvm_fatal("build_phase", "No virtual interface specified for this monitor instance")
        end
    endfunction
 
