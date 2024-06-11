@@ -13,6 +13,8 @@ class uvm_uart_env extends uvm_env;
     axis_agent slv_axis_agent;
     apb_agent  mst_apb_agent;
 
+    uvm_uart_scoreboard uvm_uart_scoreboard_h;
+
     
 
     virtual function void build_phase(uvm_phase phase);
@@ -31,8 +33,9 @@ class uvm_uart_env extends uvm_env;
         mst_axis_agent.agent_type = MASTER;
         slv_axis_agent.axis_if_h = slv_axis_if_h;
         slv_axis_agent.agent_type = SLAVE;
-             
 
+        uvm_uart_scoreboard_h = uvm_uart_scoreboard::type_id::create("uvm_uart_scoreboard_h", this);
+             
         `uvm_info("UVM_INFO", "Hello from env", UVM_NONE);
     endfunction
 
