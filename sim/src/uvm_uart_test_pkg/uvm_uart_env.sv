@@ -43,8 +43,9 @@ class uvm_uart_env extends uvm_env;
         super.connect_phase(phase);
         uvm_top.print_topology();
         
-        // mst_axis_agent.axis_monitor_h.analysis_port_h.connect(test_scoreboard_h.analysis_port_in_1);
-
+        mst_axis_agent.axis_monitor_h.analysis_port_h.connect(uvm_uart_scoreboard_h.analysis_port_mst_axis);
+        slv_axis_agent.axis_monitor_h.analysis_port_h.connect(uvm_uart_scoreboard_h.analysis_port_slv_axis);
+        mst_apb_agent.mon.ap.connect(uvm_uart_scoreboard_h.analysis_port_mst_apb);
         
     endfunction
 endclass
